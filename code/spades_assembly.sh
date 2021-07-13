@@ -17,4 +17,4 @@ outdir=~/md2021/analysis/CedarSwamp
 SPADESPATH=/opt/bifxapps/SPAdes-3.9.0-Linux/bin/
 
 # Run spades
-/opt/bifxapps/bin/python3.4 $SPADESPATH/spades.py -t 20 -m 800 -meta -k 21,33,55,77,99,127 -1 $r1 -2 $r2 -o $outdir/$sample
+/opt/bifxapps/bin/python3.4 $SPADESPATH/spades.py -t 20 -m 800 --meta -k 21,33,55,77,99,127 -1 $r1 -2 $r2 -o $outdir/$sample
