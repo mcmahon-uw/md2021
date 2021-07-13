@@ -21,7 +21,7 @@ source /home/GLBRCORG/trina.mcmahon/miniconda3/etc/profile.d/conda.sh
 unset PYTHONPATH
 conda activate gtdbtk-1.4.1
 
-gtdbtk classify_wf \
+nohup gtdbtk classify_wf \
         --cpus 20 \
         --extension fasta \
         --genome_dir ~/md2021/data/IsolateGenomes \
