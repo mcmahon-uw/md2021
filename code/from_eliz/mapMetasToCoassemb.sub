@@ -1,0 +1,17 @@
+##################
+# mapMetasToRefs.sub
+# Submission script for mapping metagenomic reads to assemblies
+# Elizabeth McDaniel
+##################
+
+request_cpus = 6
+request_memory = 150GB
+
+executable = /home/GLBRCORG/emcdaniel/EBPR/Abigail/executables/mapMetasToCoassemb.sh
+arguments = $(ref) $(meta) $(out)
+
+output = /home/GLBRCORG/emcdaniel/EBPR/Abigail/outs/$(Cluster)_$(Process)_mapping.out
+error = /home/GLBRCORG/emcdaniel/EBPR/Abigail/errs/$(Cluster)_$(Process)_mapping.err
+log = /home/GLBRCORG/emcdaniel/EBPR/Abigail/logs/$(Cluster)_$(Process)_mapping.log
+
+queue ref,meta,out from metadata/mappingCombos.txt
