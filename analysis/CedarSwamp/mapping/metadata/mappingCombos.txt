@@ -1,1 +1,1 @@
-/home/GLBRCORG/trina.mcmahon/md2021/analysis/CedarSwamp/assembly/CedarSwamp_2019_EAA_30cm_scaffolds.fasta	/home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/CedarSwamp/CedarSwamp_2019_EAA_30cm.fastq.qcd.gz	mappingResults
+/home/GLBRCORG/trina.mcmahon/md2021/analysis/CedarSwamp/assembly/CedarSwamp_2019_EAA_30cm_scaffolds.fasta /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/CedarSwamp/CedarSwamp_2019_EAA_30cm.fastq.qcd.gz mappingResults
