@@ -28,3 +28,22 @@ nohup gtdbtk classify_wf \
         --out_dir taxonomy &
 
 ```
+
+Run CheckM
+
+
+Looking for some Chlorobi
+
+These are isolates that Patrick assembled from above:
+
+51_no
+52_no
+NH9_no
+Prosthecochloris_scaffolds
+
+These are the ones in the metadata sheets
+
+
+2018.EC.10.07.04	2018.5.Group2.ST.1	Sarah Tucker	Chlorobi	Trunk River
+2018.EC.10.07.04	2018.5.Group2.ST.2	Sarah Tucker	Chlorobi	Trunk River
+2018.EC.10.07.04	2018.5.Group2.ST.3	Sarah Tucker	Chlorobi	Trunk River

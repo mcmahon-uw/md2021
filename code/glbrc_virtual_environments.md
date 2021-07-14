@@ -16,13 +16,15 @@ conda create -y -n bioinformatics python=3.6
 
 conda install -n bioinformatics -c bioconda checkm-genome
 conda install -n bioinformatics -c anaconda nano
+conda install -n bioinformatics -c bioconda fastp
+conda install -n bioinformatics -c bioconda spades
 
 **not installed**
 
 conda install -n bioinformatics -c bioconda fastqc
 conda install -n bioinformatics hmmer
 conda install -n bioinformatics -c bioconda blast
-conda install -n bioinformatics -c bioconda fastp
+
 conda install -n bioinformatics -c bioconda spades
 conda install -n bioinformatics -c bioconda samtools
 conda install -n bioinformatics -c bioconda biopython

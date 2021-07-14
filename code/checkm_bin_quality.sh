@@ -17,9 +17,9 @@ PYTHONPATH=''
 # Run this on the original MAGsv1 (103)
 
 checkm lineage_wf \
-        -t 25 \
-        -x fna \
-        /home/GLBRCORG/trina.mcmahon/lake-MAGs/data/mendota-mags/MAGsv1/contig_files/ \
+        -t 5 \
+        -x fasta \
+        ~/md2021/data/IsolateGenomes \
         checkM &
 
 checkm qa \

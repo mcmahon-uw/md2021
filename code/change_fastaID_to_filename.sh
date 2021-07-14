@@ -6,9 +6,9 @@
 ## Don't forget to create a lookup table to relate the old to new fastIDs
 #######################
 
-mkdir renamed
+mkdir fastas_renamed
 
-for FILE in *.fna;
+for FILE in *.fasta;
 do
- awk '/^>/ {gsub(/.fna/,"",FILENAME);printf(">%s\n",FILENAME);next;} {print}' $FILE > renamed/${FILE}
-done
+ awk '/^>/ {gsub(/.fasta/,"",FILENAME);printf(">%s\n",FILENAME);next;} {print}' $FILE > fastas_renamed/${FILE}
+done &
