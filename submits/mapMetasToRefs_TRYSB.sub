@@ -14,4 +14,4 @@ output = ~/md2021/outs/$(Cluster)_$(Process)_mapping.out
 error = ~/md2021/errs/$(Cluster)_$(Process)_mapping.err
 log = ~/md2021/logs/$(Cluster)_$(Process)_mapping.log
 
-queue r1,r2,out from mappingCombos_TYRSB.txt
+queue r1,r2,out from /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/mappingCombos_TRYSB.txt
