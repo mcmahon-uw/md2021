@@ -50,7 +50,7 @@ Next near lemonade
 ```
 SPADESPATH=/opt/bifxapps/SPAdes-3.13.1/bin/
 
-nohup $SPADESPATH/spades.py -t 20 -m 800 --meta -k 21,33,55,77,99,127 -1 ~/md2021/data/metagenomes/TrunkRiver/near_lem_GGACTCCT-AGAGTAGA_L001_R1_001.qcd.fastq.gz -2 ~/md2021/data/metagenomes/TrunkRiver/near_lem_GGACTCCT-AGAGTAGA_L001_R2_001.qcd.fastq.gz -o near_lem_2018 &
+nohup $SPADESPATH/spades.py -t 20 -m 800 --meta -k 21,33,55,77,99,127 -1 ~/md2021/data/metagenomes/TrunkRiver/near_lem_GGACTCCT-AGAGTAGA_L001_R1_001.qcd.fastq.gz -2 ~/md2021/data/metagenomes/TrunkRiver/near_lem_GGACTCCT-AGAGTAGA_L001_R2_001.qcd.fastq.gz -o near_lem_2018_2 &
 
 ```
 
@@ -62,7 +62,7 @@ Next TRYSB
 ```
 SPADESPATH=/opt/bifxapps/SPAdes-3.13.1/bin
 
-nohup $SPADESPATH/spades.py -t 15 -m 800 --meta -k 21,33,55,77,99,127 -1 ~/md2021/data/metagenomes/TrunkRiver/TRYSB_TAAGGCGA-GTAAGGAG_L001_R1_001.qcd.fastq.gz -2 ~/md2021/data/metagenomes/TrunkRiver/TRYSB_TAAGGCGA-GTAAGGAG_L001_R2_001.qcd.fastq.gz -o TRYSB_2018 &
+nohup $SPADESPATH/spades.py -t 20 -m 800 --meta -k 21,33,55,77,99,127 -1 ~/md2021/data/metagenomes/TrunkRiver/TRYSB_TAAGGCGA-GTAAGGAG_L001_R1_001.qcd.fastq.gz -2 ~/md2021/data/metagenomes/TrunkRiver/TRYSB_TAAGGCGA-GTAAGGAG_L001_R2_001.qcd.fastq.gz -o TRYSB_2018 &
 
 ```
 TRNSB not done yet
@@ -73,5 +73,27 @@ nohup /opt/bifxapps/bin/python3.4 /opt/bifxapps/SPAdes-3.9.0-Linux/bin/spades.py
 ```
 
 
+Next interleave them:
+
+```
+
+~/md2021/code/reformat-fastq.sh ~/md2021/data/metagenomes/TrunkRiver/TRNSB_CAGAGAGG-AGAGTAGA_L001_R1_001.qcd.fastq.gz ~/md2021/data/metagenomes/TrunkRiver/TRNSB_CAGAGAGG-AGAGTAGA_L001_R2_001.qcd.fastq.gz TRNSB_2018.qcd.fastq.gz
+
+```
+
+etc for others
 
 ###  Binning
+
+Map the metaGs to the assembly
+
+TRYSB
+
+```
+BBPATH=/opt/bifxapps/bbmap-38.32
+
+nohup $BBPATH/bbmap.sh ref=/home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/assembly/TRYSB_2018_scaffolds.fasta in=/home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/TRYSB_2018.qcd.fastq.gz outm=TRYSB_2018_mapping.bam idtag minid=0.95 nodisk -Xmx100g &
+
+```
+
+Waiting for the other assemblies to be done....

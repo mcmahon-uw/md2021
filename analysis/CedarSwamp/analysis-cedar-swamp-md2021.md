@@ -60,6 +60,7 @@ nohup $BBPATH/bbmap.sh ref=/home/GLBRCORG/trina.mcmahon/md2021/analysis/CedarSwa
 ok, now sort
 
 ```
-SAMTOOLS=/opt/bifxapps/samtools-1.9/bin
-$SAMTOOLS/samtools sort $out -o ${out%.bam}.sorted.bam
+conda activate bioinformatics
+
+samtools sort CedarSwamp_mapping.bam -o CedarSwamp_mapping.sorted.bam &
 ```

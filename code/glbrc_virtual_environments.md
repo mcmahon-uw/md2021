@@ -18,6 +18,7 @@ conda install -n bioinformatics -c bioconda checkm-genome
 conda install -n bioinformatics -c anaconda nano
 conda install -n bioinformatics -c bioconda fastp
 conda install -n bioinformatics -c bioconda spades
+conda install -n bioinformatics -c bioconda samtools
 
 **not installed**
 
