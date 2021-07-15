@@ -1,1 +1,0 @@
-/home/GLBRCORG/trina.mcmahon/md2021/analysis/analysis/TrunkRiver/assembly/TRYSB_2018_scaffolds.fasta /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/TRYSB_2018.qcd.fastq.gz /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/mappingResults
