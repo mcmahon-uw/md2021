@@ -1,0 +1,17 @@
+##################
+# near_lem_2018_assembly.sub
+# Submission script for assembling near_lem_2018
+#
+##################
+
+request_cpus = 23
+request_memory = 800GB
+
+executable = /home/GLBRCORG/trina.mcmahon/md2021/code/assembly_near_lem.sh
+
+
+output = ~/md2021/outs/$(Cluster)_$(Process)_mapping.out
+error = ~/md2021/errs/$(Cluster)_$(Process)_mapping.err
+log = ~/md2021/logs/$(Cluster)_$(Process)_mapping.log
+
+queue
