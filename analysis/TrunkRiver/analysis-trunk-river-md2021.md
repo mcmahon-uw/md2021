@@ -46,13 +46,15 @@ Note:  had a lot of trouble with getting spades to run because it had
 
 
 Next near lemonade
+Taking forever and thrashing around trying to submit and get resources. Can't figure out if I have the submit file setup right so try running interactive but then can't close terminal???
 
 ```
 SPADESPATH=/opt/bifxapps/SPAdes-3.13.1/bin/
 
-nohup $SPADESPATH/spades.py -t 20 -m 800 --meta -k 21,33,55,77,99,127 -1 ~/md2021/data/metagenomes/TrunkRiver/near_lem_GGACTCCT-AGAGTAGA_L001_R1_001.qcd.fastq.gz -2 ~/md2021/data/metagenomes/TrunkRiver/near_lem_GGACTCCT-AGAGTAGA_L001_R2_001.qcd.fastq.gz -o near_lem_2018_2 &
+nohup $SPADESPATH/spades.py -t 20 -m 200 --meta -k 21,33,55,77,99,127 -1 ~/md2021/data/metagenomes/TrunkRiver/near_lem_GGACTCCT-AGAGTAGA_L001_R1_001.qcd.fastq.gz -2 ~/md2021/data/metagenomes/TrunkRiver/near_lem_GGACTCCT-AGAGTAGA_L001_R2_001.qcd.fastq.gz -o near_lem_2018_3 &
 
 ```
+
 
 
 
