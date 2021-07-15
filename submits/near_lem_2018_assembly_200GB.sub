@@ -1,0 +1,17 @@
+##################
+# near_lem_2018_assembly.sub
+# Submission script for assembling near_lem_2018
+#
+##################
+
+request_cpus = 23
+request_memory = 200GB
+
+executable = /home/GLBRCORG/trina.mcmahon/md2021/code/assembly_near_lem.sh
+arguments = "-t 20 -m 800 --meta -k 21,33,55,77,99,127 --continue -1 ~/md2021/data/metagenomes/TrunkRiver/near_lem_GGACTCCT-AGAGTAGA_L001_R1_001.qcd.fastq.gz -2 ~/md2021/data/metagenomes/TrunkRiver/near_lem_GGACTCCT-AGAGTAGA_L001_R2_001.qcd.fastq.gz -o near_lem_2018_2"
+
+output = ~/md2021/outs/$(Cluster)_$(Process)_mapping.out
+error = ~/md2021/errs/$(Cluster)_$(Process)_mapping.err
+log = ~/md2021/logs/$(Cluster)_$(Process)_mapping.log
+
+queue
