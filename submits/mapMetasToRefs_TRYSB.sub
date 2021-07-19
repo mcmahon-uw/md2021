@@ -10,8 +10,8 @@ request_memory = 100GB
 executable = /home/GLBRCORG/trina.mcmahon/md2021/code/mapMetasToRefs_TRYSB.sh
 arguments = $(r1) $(r2) $(out)
 
-output = ~/md2021/outs/$(Cluster)_$(Process)_mapping.out
-error = ~/md2021/errs/$(Cluster)_$(Process)_mapping.err
-log = ~/md2021/logs/$(Cluster)_$(Process)_mapping.log
+output = /home/GLBRCORG/trina.mcmahon/outs/$(Cluster)_$(Process)_mapping.out
+error = /home/GLBRCORG/trina.mcmahon/errs/$(Cluster)_$(Process)_mapping.err
+log = /home/GLBRCORG/trina.mcmahon/logs/$(Cluster)_$(Process)_mapping.log
 
 queue r1,r2,out from /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/mappingCombos_TRYSB.txt
