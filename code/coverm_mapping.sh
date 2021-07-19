@@ -10,6 +10,19 @@ PYTHONPATH=""
 
 conda activate CoverM
 
+# Start with TRYSB
+
+coverm contig \
+    --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/assembly/near_lem_2018_bins/ \
+    --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/near_lem_2018.qcd.fastq.gz \
+    --bam-file-cache-directory bam_cache \
+    --min-read-aligned-percent 0.75 \
+    --min-read-percent-identity 0.95 \
+    --min-covered-fraction 0 \
+    -t 20 > mean_covg_output.txt &
+
+# Next near_lem bins
+
 coverm contig \
     --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/assembly/TRYSB_2018_scaffolds.fasta \
     --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/TRYSB_2018.qcd.fastq.gz \
@@ -18,7 +31,6 @@ coverm contig \
     --min-read-percent-identity 0.95 \
     --min-covered-fraction 0 \
     -t 20 > mean_covg_output.txt &
-
 
 
 

@@ -224,6 +224,44 @@ gtdbtk classify_wf \
 
 ```
 
+I have three Chlorobi bins!!!
+
+near_lem_2018_bin.4
+near_lem_2018_bin.5
+near_lem_2018_bin.20
+
+Try CheckM
+
+```
+source /home/GLBRCORG/trina.mcmahon/miniconda3/etc/profile.d/conda.sh
+conda activate bioinformatics
+PYTHONPATH=''
+
+checkm lineage_wf \
+        -t 25 \
+        -x fa \
+        /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/near_lem_2018_bins \
+        checkM &
+
+checkm qa \
+        checkM/lineage.ms \
+        checkM \
+        -o 2 \
+        -f checkM/checkm.out \
+        --tab_table
+
+awk -F '\t' -v OFS='\t' '{ print $1,$6,$7,$9,$11,$13,$15,$17,$19,$23 }' checkM/checkm.out > checkm_stats.tsv
+```
+near_lem_2018_bin.4	44.83	0.00	1006886	11	198761	91535	319604	52.5	931
+near_lem_2018_bin.20	53.61	1.10	796142	127	6752	6268	27736	51.7	888
+near_lem_2018_bin.5	35.71	0.00	477377	4	137031	119344	164542	52.1	461
+
+phooo... .none very complete
+
+Try coverM
+
+(first need to rename contigs... ugh)
+
 
 
 # baby_lem
@@ -242,7 +280,7 @@ for file in bin*
 
 ```
 
-Got XX bins
+Got 21 bins for baby_lem
 
 Now GTDBK
 
@@ -261,6 +299,29 @@ gtdbtk classify_wf \
 ```
 
 
+Try CheckM
+
+```
+source /home/GLBRCORG/trina.mcmahon/miniconda3/etc/profile.d/conda.sh
+conda activate bioinformatics
+PYTHONPATH=''
+
+checkm lineage_wf \
+        -t 25 \
+        -x fa \
+        /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/baby_lem_2018_bins \
+        checkM &
+
+checkm qa \
+        checkM/lineage.ms \
+        checkM \
+        -o 2 \
+        -f checkM/checkm.out \
+        --tab_table &
+
+awk -F '\t' -v OFS='\t' '{ print $1,$6,$7,$9,$11,$13,$15,$17,$19,$23 }' checkM/checkm.out > checkm_stats.tsv
+```
+
 
 
 
@@ -271,3 +332,61 @@ gtdbtk classify_wf \
 852604 scaffolds were read in.
 8105 scaffolds met minimum requirements: at least 1000bp and 4 ORFs.
 273 putative phages were identified.
+
+
+
+##  CRISPRs
+
+From Emil:
+
+genome name	CRISPR array #	contig	location (bp)	length	#spacers	DR seq	DR length
+
+Chlorobaculum sp. Trunk_River	CRISPR1	26	20933-26430	42829	82	GTTTCAATTCCATATTGGTGCAATTAAAAT	30
+Chlorobaculum sp. Trunk_River	CRISPR2	145	613-1685	16001	14	GTCGCAATACGCTATGCGTGCAATGAAATAGAAAG	35
+Chlorobaculum sp. Trunk_River	CRISPR3	145	198-278	16001	2	GTCGCAATACGCTATGCGTGCAATGAAATAGAAAG	35
+
+Prosthecochloris sp. Trunk_River	CRISPR1	20	3561-4695	55534	14	GTCTCAATCCCCCTTACTCAATCGGGTCTGTCTACAC	37
+Prosthecochloris sp. Trunk_River	CRISPR2	316	7079-7510	10315	6	GTCGCGCCCCCCGCGGGCGCGTGGATTGAAAC	32
+Prosthecochloris sp. Trunk_River	CRISPR3	316	10128-10293	10315	2	GTCGCGCCCCCCGCGGGCGCGTGGATTGAAACC	33
+
+
+Set up the blasts:
+
+```
+source /home/GLBRCORG/trina.mcmahon/miniconda3/etc/profile.d/conda.sh
+PYTHONPATH=""
+conda activate bioinformatics
+
+makeblastdb -dbtype nucl -in baby_lem_2018_scaffolds.fasta -out baby_lem_2018.fna.db &
+
+blastn -query CRISPR_spacers_from_Emil.fasta -db baby_lem_2018.fna.db -task blastn -evalue 1e-8 -out spacers-vs-baby_lem_2018.blastn -outfmt 6 &
+
+makeblastdb -dbtype nucl -in near_lem_2018_scaffolds.fasta -out near_lem_2018.fna.db &
+
+blastn -query CRISPR_spacers_from_Emil.fasta -db near_lem_2018.fna.db -task blastn -evalue 1e-8 -out spacers-vs-near_lem_2018.blastn -outfmt 6 &
+```
+
+Again for the bins
+
+```
+source /home/GLBRCORG/trina.mcmahon/miniconda3/etc/profile.d/conda.sh
+PYTHONPATH=""
+conda activate bioinformatics
+
+makeblastdb -dbtype nucl -in near_lem_2018_bin.4.fa -out near_lem_2018_bin.4.fna.db &
+
+blastn -query CRISPR_spacers_from_Emil.fasta -db near_lem_2018_bin.4.fa.db -task blastn -evalue 1e-8 -out spacers-vs-near_lem_bin.4.blastn -outfmt 6 &
+
+makeblastdb -dbtype nucl -in near_lem_2018_bin.5.fa -out near_lem_2018_bin.5.fna.db &
+
+blastn -query CRISPR_spacers_from_Emil.fasta -db near_lem_2018_bin.5.fa.db -task blastn -evalue 1e-8 -out spacers-vs-near_lem_bin.5.blastn -outfmt 6 &
+
+makeblastdb -dbtype nucl -in near_lem_2018_bin.20.fa -out near_lem_2018_bin.20.fa.db &
+
+blastn -query CRISPR_spacers_from_Emil.fasta -db near_lem_2018_bin.20.fa.db -task blastn -evalue 1e-8 -out spacers-vs-near_lem_bin.20.blastn -outfmt 6 &
+```
+
+Only a match to near_lem_2018_bin.4.fa on one contig
+Prosthecochloris_CRISPR1	NODE_453_length_18739_cov_795.613744	100.000	29
+
+No match in bin.5 or bin.20
