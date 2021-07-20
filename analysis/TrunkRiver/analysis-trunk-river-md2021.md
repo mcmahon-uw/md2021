@@ -258,10 +258,6 @@ near_lem_2018_bin.5	35.71	0.00	477377	4	137031	119344	164542	52.1	461
 
 phooo... .none very complete
 
-Try coverM
-
-(first need to rename contigs... ugh)
-
 
 
 # baby_lem
@@ -298,6 +294,11 @@ gtdbtk classify_wf \
 
 ```
 
+Got two bins!
+
+baby_lem_2018_bin.1	d__Bacteria;p__Bacteroidota;c__Chlorobia;o__Chlorobiales;f__Chlorobiaceae;g__Chlorobaculum;s__
+baby_lem_2018_bin.12	d__Bacteria;p__Bacteroidota;c__Chlorobia;o__Chlorobiales;f__Chlorobiaceae;g__Prosthecochloris;s__
+
 
 Try CheckM
 
@@ -323,6 +324,20 @@ awk -F '\t' -v OFS='\t' '{ print $1,$6,$7,$9,$11,$13,$15,$17,$19,$23 }' checkM/c
 ```
 
 
+Try coverM
+
+Renamed contigs with change_fastaID_to_filename.sh and add_contig_num_to_fastaID.sh but then needed to clean up in order to map to genomes (need unique separator between genome name and contig number)
+
+Concatenated before the cleanup (so individual ones have different separator)
+
+```
+cat baby_lem_bins_concat.fasta | sed "s/\_C/~C/" > baby_lem_bins_concat.fna
+```
+
+Wow, bin.1 is only 0.7 % and bin.12 is 0.9% and nothing else is even terribly high. Bin.2 is 2.9% but it is a Campylobacter. Ugh.  Total reads unmapped is 79%
+
+Try relaxing %-ID to 85%
+Not any better.
 
 
 ## VIBRANT
@@ -333,6 +348,7 @@ awk -F '\t' -v OFS='\t' '{ print $1,$6,$7,$9,$11,$13,$15,$17,$19,$23 }' checkM/c
 8105 scaffolds met minimum requirements: at least 1000bp and 4 ORFs.
 273 putative phages were identified.
 
+baby_lem_bin.1 didn't have any predicted phages
 
 
 ##  CRISPRs
@@ -366,7 +382,7 @@ makeblastdb -dbtype nucl -in near_lem_2018_scaffolds.fasta -out near_lem_2018.fn
 blastn -query CRISPR_spacers_from_Emil.fasta -db near_lem_2018.fna.db -task blastn -evalue 1e-8 -out spacers-vs-near_lem_2018.blastn -outfmt 6 &
 ```
 
-Again for the bins
+Again for the bins from near_lem
 
 ```
 source /home/GLBRCORG/trina.mcmahon/miniconda3/etc/profile.d/conda.sh
@@ -390,3 +406,24 @@ Only a match to near_lem_2018_bin.4.fa on one contig
 Prosthecochloris_CRISPR1	NODE_453_length_18739_cov_795.613744	100.000	29
 
 No match in bin.5 or bin.20
+
+Check baby_lem
+
+```
+makeblastdb -dbtype nucl -in baby_lem_2018_bin.1.fa -out baby_lem_2018_bin.1.fna.db &
+
+blastn -query CRISPR_spacers_from_Emil.fasta -db baby_lem_2018_bin.1.fna.db -task blastn -evalue 1e-8 -out spacers-vs-baby_lem_bin.1.blastn -outfmt 6 &
+
+makeblastdb -dbtype nucl -in baby_lem_2018_bin.12.fa -out baby_lem_2018_bin.12.fna.db &
+
+blastn -query CRISPR_spacers_from_Emil.fasta -db baby_lem_2018_bin.12.fna.db -task blastn -evalue 1e-8 -out spacers-vs-baby_lem_bin.12.blastn -outfmt 6 &
+```
+
+
+WOW!!!
+baby_lem_2018_bin.1.fa has TONS of matches to the Prosthecochloris CRISPRs. Weird because it is the Chlorobaculum...
+
+It's on NODE_253_length_20287_cov_7.990228 so quite long
+Need some code to extract the CRISPR spacers (ask Rachel)
+
+Looks like bin.12 might be very similar to bin.4 from near_lem

@@ -13,17 +13,6 @@ conda activate CoverM
 # Start with TRYSB
 
 coverm contig \
-    --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/assembly/near_lem_2018_bins/ \
-    --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/near_lem_2018.qcd.fastq.gz \
-    --bam-file-cache-directory bam_cache \
-    --min-read-aligned-percent 0.75 \
-    --min-read-percent-identity 0.95 \
-    --min-covered-fraction 0 \
-    -t 20 > mean_covg_output.txt &
-
-# Next near_lem bins
-
-coverm contig \
     --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/assembly/TRYSB_2018_scaffolds.fasta \
     --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/TRYSB_2018.qcd.fastq.gz \
     --bam-file-cache-directory bam_cache \
@@ -32,12 +21,53 @@ coverm contig \
     --min-covered-fraction 0 \
     -t 20 > mean_covg_output.txt &
 
+# Next baby_lem bins
 
+coverm contig \
+    --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/coverM/baby_lem_bins_concat.fasta \
+    --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/baby_lem_2018.qcd.fastq.gz \
+    --bam-file-cache-directory bam_cache \
+    --min-read-aligned-percent 0.75 \
+    --min-read-percent-identity 0.95 \
+    --min-covered-fraction 0 \
+    -t 28 > baby_lem_bins_mean_covg_output.txt &
 
+mmm
 
+coverm genome \
+    --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/coverM/baby_lem_bins_concat.fna \
+    -s "~" \
+    -m relative_abundance \
+    --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/baby_lem_2018.qcd.fastq.gz \
+    --bam-file-cache-directory bam_cache \
+    --min-read-aligned-percent 0.75 \
+    --min-read-percent-identity 0.95 \
+    --min-covered-fraction 0 \
+    -t 28 > baby_lem_bins_relabun_output.txt &
 
+## baby_lem bins but with relaxed ANI cutoff
 
+coverm genome \
+    --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/coverM/baby_lem_bins_concat.fna \
+    -s "~" \
+    -m relative_abundance \
+    --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/baby_lem_2018.qcd.fastq.gz \
+    --bam-file-cache-directory bam_cache \
+    --min-read-aligned-percent 0.75 \
+    --min-read-percent-identity 0.85 \
+    --min-covered-fraction 0 \
+    -t 28 > baby_lem_bins_85_relabun_output.txt &
 
+## baby_lem assembly
+
+coverm contig \
+    --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/baby_lem_2018_scaffolds.fasta \
+    --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/baby_lem_2018.qcd.fastq.gz \
+    --bam-file-cache-directory bam_cache \
+    --min-read-aligned-percent 0.75 \
+    --min-read-percent-identity 0.95 \
+    --min-covered-fraction 0 \
+    -t 28 > baby_lem_assembly_mean_covg_output.txt &
 
 
 
