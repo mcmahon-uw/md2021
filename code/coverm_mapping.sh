@@ -45,6 +45,18 @@ coverm genome \
     --min-covered-fraction 0 \
     -t 28 > baby_lem_bins_relabun_output.txt &
 
+    coverm genome \
+        --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/coverM/baby_lem_bins_concat.fna \
+        -s "~" \
+        -m mean \
+        --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/baby_lem_2018.qcd.fastq.gz \
+        --bam-file-cache-directory bam_cache \
+        --min-read-aligned-percent 0.75 \
+        --min-read-percent-identity 0.95 \
+        --min-covered-fraction 0 \
+        -t 28 > baby_lem_bins_mean_covg_output.txt &
+
+
 ## baby_lem bins but with relaxed ANI cutoff
 
 coverm genome \
@@ -69,6 +81,29 @@ coverm contig \
     --min-covered-fraction 0 \
     -t 28 > baby_lem_assembly_mean_covg_output.txt &
 
+
+
+coverm genome \
+    -f /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/baby_lem_2018_scaffolds.fasta \
+    -m relative_abundance \
+    --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/baby_lem_2018.qcd.fastq.gz \
+    --bam-file-cache-directory bam_cache \
+    --min-read-aligned-percent 0.75 \
+    --min-read-percent-identity 0.95 \
+    --min-covered-fraction 0 \
+    -t 28 > baby_lem_assembly_relabun_output.txt &
+
+
+### Unbinned contigs from baby_lem
+
+coverm contig \
+    --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/coverM/baby_lem_2018_v2_bin.unbinned.fa \
+    --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/baby_lem_2018.qcd.fastq.gz \
+    --bam-file-cache-directory bam_cache \
+    --min-read-aligned-percent 0.75 \
+    --min-read-percent-identity 0.95 \
+    --min-covered-fraction 0 \
+    -t 28 > baby_lem_unbinned_mean_covg_output.txt &
 
 
 

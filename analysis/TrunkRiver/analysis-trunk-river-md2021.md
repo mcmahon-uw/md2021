@@ -334,10 +334,109 @@ Concatenated before the cleanup (so individual ones have different separator)
 cat baby_lem_bins_concat.fasta | sed "s/\_C/~C/" > baby_lem_bins_concat.fna
 ```
 
-Wow, bin.1 is only 0.7 % and bin.12 is 0.9% and nothing else is even terribly high. Bin.2 is 2.9% but it is a Campylobacter. Ugh.  Total reads unmapped is 79%
+Wow, bin.1 is only 0.7 % and bin.12 is 0.9% and nothing else is even terribly higher. Bin.2 is 2.9% but it is a Campylobacter. Ugh.  Total reads unmapped is 79%
 
 Try relaxing %-ID to 85%
 Not any better.
+
+So is it the assembly or the binning?
+
+Map against the assembly using coverM contig setting
+
+unmapped	38.40472
+baby_lem_2018_scaffolds	61.59528
+
+Ok this means a bunch of contigs were not binned
+
+How to figure out which ones were not?
+Looks like I should re-run metabat with the --unbinned flag to get them.
+
+```
+/opt/bifxapps/metabat-2.12.1/metabat2 -i /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/assembly/baby_lem_2018_scaffolds.fasta -a baby_lem_2018_depth.txt -o baby_lem_2018_bins_v2/bin --unbinned &
+
+for file in bin*
+  do
+    mv $file baby_lem_2018_v2_$file
+  done
+```
+
+OK now do coverM on these unbinned ones
+
+WOW LOTS WITH CRAZY COVG
+
+I took the ones with > 500x coverage (88 of them) and will poke at them.
+
+Highest coverage:
+
+cat baby_lem_2018_v2_bin.unbinned.fa | grep -A 25 "NODE_43888_length_1163_cov_1448.801158"
+
+NODE_43888_length_1163_cov_1448.801158  13056x
+Only one really small hit to brown trout!  LOL
+
+NODE_23621_length_1508_cov_2.405503 3615x
+Lots of repeats and those are hitting euks (but rest is not hitting anything)
+
+Pick something longer:
+
+NODE_550_length_9489_cov_913.714911 2441x
+Ciliate
+
+NODE_336_length_15282_cov_466.475949  1315
+Green algae
+
+
+Bottom line: many of the crazy high covg contigs look like euks
+
+
+## SOURMASH on assembly
+
+Trying to classify the unbinned reads from baby_lem
+
+Installing sourmash
+
+```
+conda create -n sourmash
+conda install -n sourmash -c conda-forge -c bioconda sourmash
+
+sourmash sketch dna -p scaled=10000,k=31 baby_lem_2018_v2_bin.unbinned.fa -o baby_lem_unbinned.sig
+
+sourmash gather -k 31 baby_lem_unbinned.sig genbank-k31.lca.json.gz
+
+
+```
+
+OK that was a bust. Got very few matches.
+
+##  BLAST on unassembled contigs
+
+Patricia suggested just blasting the unassembled contigs to try and get a handle on what they are.  Work on scaling this, rather than doing one high-covg one at a time
+
+BLAST against refseq:
+/opt/bifxapps/ncbi-blastdb
+
+```
+nohup blastx -query ../baby_lem_2018_v2_bin.unbinned.fa -db /opt/bifxapps/ncbi-blastdb/refseq_protein -task blastx -evalue 1e-8 -out baby_lem_unbinned-vs-refseq_protein.blastx -num_threads 28 -outfmt 6 &
+
+```
+Should have included sscinames
+Though not sure the blastdb's are formated to use this, so actually run the regular one too?
+They are not. Grrr
+
+```
+nohup blastx -query ../baby_lem_2018_v2_bin.unbinned.fa -db /opt/bifxapps/ncbi-blastdb/refseq_protein -task blastx -evalue 1e-8 -out baby_lem_unbinned-vs-refseq_protein_wtax.blastx -num_threads 30 -outfmt "6 sscinames" &
+
+```
+
+Early results:
+NODE_57_length_77655_cov_38.308185  96x
+is Thiocapsa
+
+NODE_100_length_41589_cov_27.687642 70x
+is Thermoplasmatota (Archaea)
+
+
+
+
 
 
 ## VIBRANT
@@ -427,3 +526,31 @@ It's on NODE_253_length_20287_cov_7.990228 so quite long
 Need some code to extract the CRISPR spacers (ask Rachel)
 
 Looks like bin.12 might be very similar to bin.4 from near_lem
+
+Let's try doing it agains tthe entire assembly
+
+Got a script from Rachel's postdoc Alan. Had to rename the fastas in the assembly using file name and then contig name. Not sure how this will work.
+
+```
+
+makeblastdb -dbtype nucl -in baby_lem_2018_scaffolds_renamed.fasta -out baby_lem_2018_scaffolds_renamed.db &
+
+~/md2021/code/reps2spacers.py -r CRISPR_spacers_from_Emil.fasta \
+    -d baby_lem_2018_scaffolds_renamed.db \
+    -o spacers_baby_lem_assembly \
+    -t 15 \
+    -p baby &
+
+
+
+```
+
+also try
+
+```
+~/md2021/code/reps2spacers.py -r CRISPR_spacers_from_Emil.fasta \
+    -d baby_lem_2018.fna.db \
+    -o spacers_baby_lem_assembly \
+    -t 15 \
+    -p NODE &
+```

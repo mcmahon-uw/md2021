@@ -380,7 +380,7 @@ outdir = args.outdir + '/' if args.outdir[-1] != '/' else args.outdir
 # Find the names of all the genomes being searched by looking for the user-provided regex in the blast-db sequence IDs.
 # for all genomes, start their entry in the genome_CRISPR_dict with the placeholder False. This indicated no CRISPRs found.
 # If a CRISPR array is found later this entry will be overwritten with infor about the arrays.
-genome_CRISPR_dict = { k : ['False'] for k in subprocess.run("blastdbcmd -db {} -entry all -outfmt '\%a' | grep -o{} '{}' | sort | uniq".format(args.blast_db_path, args.regex_type, args.regex_pattern), shell=True, universal_newlines = True, capture_output=True).stdout.split('\n') if len(k) > 0}
+genome_CRISPR_dict = { k : ['False'] for k in subprocess.run("blastdbcmd -db {} -entry all -outfmt '\%a' | grep -o{} '{}' | sort | uniq".format(args.blast_db_path, args.regex_type, args.regex_pattern), shell=True, universal_newlines = True, stdout=subprocess.PIPE).stdout.split('\n') if len(k) > 0}
 
 all_arrays = blastn_to_arrays(args)
 
