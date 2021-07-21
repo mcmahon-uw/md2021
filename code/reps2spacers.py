@@ -138,7 +138,7 @@ def run_blastcmd(db, fstring, batch_locations):
         prints the error as well as the information provided to blastdbcmd and aborts the process.
     """
     x = subprocess.run('printf "{}" {}| blastdbcmd -db {} -entry_batch -'.format(fstring, batch_locations, db),
-                        shell=True, universal_newlines = True, capture_output=True)
+                        shell=True, universal_newlines = True, stdout=subprocess.PIPE)
     if x.stderr:
         print("ERROR running blastdbcmd on {} :\n{}".format(db, batch_locations, x.stderr))
         sys.exit()
@@ -228,8 +228,8 @@ def blastn_to_arrays(args):
         No arrays found: If no arrays were found in the blast database then this raises an error stating that and exits.
     """
     blastn_command = "blastn -query {} -db {} -task blastn-short -outfmt '6 std qlen slen' -num_threads {} -max_target_seqs {} -evalue {} {}".format(args.repeats_file, args.blast_db_path, args.num_threads, args.max_target_seqs, args.evalue, args.other_blast_options)
-    blast_run = subprocess.run(blastn_command, shell=True, universal_newlines = True, capture_output=True)
-    # blast_lines = [blast_result(i) for i in subprocess.run(blastn_command, shell=True, universal_newlines = True, capture_output=True).stdout.split('\n') if len(i) > 0]
+    blast_run = subprocess.run(blastn_command, shell=True, universal_newlines = True, stdout=subprocess.PIPE)
+    # blast_lines = [blast_result(i) for i in subprocess.run(blastn_command, shell=True, universal_newlines = True, stdout=subprocess.PIPE).stdout.split('\n') if len(i) > 0]
     if blast_run.stderr:
         print("ERROR running blast on {}:\n{}".format(args.blast_db_path, blast_run.stderr))
         sys.exit()
