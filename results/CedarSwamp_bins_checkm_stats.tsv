@@ -1,0 +1,7 @@
+Bin Id	Completeness	Contamination	Genome size (bp)	# scaffolds	N50 (scaffolds)	Mean scaffold length (bp)	Longest scaffold (bp)	GC	# predicted genes
+CedarSwamp_bin.1	98.81	1.71	3402494	22	254973	154658	511184	41.5	3299
+CedarSwamp_bin.2	0.00	0.00	520180	88	6266	5911	24346	58.4	684
+CedarSwamp_bin.3	47.41	8.62	6510113	957	7998	6802	37282	65.4	6355
+CedarSwamp_bin.4	81.19	20.69	7271353	1020	8583	7128	32916	64.0	7202
+CedarSwamp_bin.5	25.86	0.00	2498792	609	4090	4103	12299	57.6	2749
+CedarSwamp_bin.6	55.33	1.72	4625982	561	10425	8245	34225	58.4	4652
