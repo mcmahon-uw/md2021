@@ -8,7 +8,7 @@
 
 mkdir fastas_renamed
 
-for FILE in *.fasta;
+for FILE in *.fa;
 do
- awk '/^>/ {gsub(/.fasta/,"",FILENAME);printf(">%s\n",FILENAME);next;} {print}' $FILE > fastas_renamed/${FILE}
+ awk '/^>/ {gsub(/.fa/,"",FILENAME);printf(">%s\n",FILENAME);next;} {print}' $FILE > fastas_renamed/${FILE}
 done &

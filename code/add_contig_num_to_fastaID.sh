@@ -8,7 +8,7 @@
 
 mkdir contig_num
 
-for FILE in *.fasta;
+for FILE in *.fa;
   do
-      awk '/^>/{$0=$0"_Contig_"(++i)}1' < $FILE > contig_num/${FILE}
+      awk '/^>/{$0=$0"~Contig_"(++i)}1' < $FILE > contig_num/${FILE}
   done

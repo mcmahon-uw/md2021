@@ -1,5 +1,9 @@
 ###  Analysis notes for looking at Cedar Swamp data in MicDiv course MD2021
 
+After looking at bins, I think these might be crappy.  Only got some lab weeds as bins.  Maybe the DNA extraction didn't work well?
+
+
+
 Starting with metagenomes from 2019
 Sampled 20190730 by Elizabeth Archie
 Water in Cedar Swamp, 30 cm above sediment
@@ -64,3 +68,94 @@ conda activate bioinformatics
 
 samtools sort CedarSwamp_mapping.bam -o CedarSwamp_mapping.sorted.bam &
 ```
+
+```
+/opt/bifxapps/metabat-2.12.1/jgi_summarize_bam_contig_depths --outputDepth CedarSwamp_depth.txt CedarSwamp_mapping.sorted.bam
+
+/opt/bifxapps/metabat-2.12.1/metabat2 -i /home/GLBRCORG/trina.mcmahon/md2021/analysis/CedarSwamp/assembly/CedarSwamp_2019_EAA_30cm_scaffolds.fasta -a CedarSwamp_depth.txt -o CedarSwamp_bins/bin
+
+
+for file in bin*
+  do
+    mv $file CedarSwamp_$file
+  done
+
+
+```
+
+Got 6 bins
+
+Classify please
+
+```
+source /home/GLBRCORG/trina.mcmahon/miniconda3/etc/profile.d/conda.sh
+unset PYTHONPATH
+conda activate gtdbtk-1.4.1
+
+gtdbtk classify_wf \
+        --cpus 20 \
+        --extension fa \
+        --genome_dir /home/GLBRCORG/trina.mcmahon/md2021/analysis/CedarSwamp/binning/CedarSwamp_bins \
+        --out_dir taxonomy &
+
+```
+
+Oooof they are crap
+
+d__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Pseudomonadales;f__Moraxellaceae;g__Acinetobacter;s__
+d__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Burkholderiales;f__Burkholderiaceae;g__Paraburkholderia;s__Paraburkholderia tropica
+d__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Burkholderiales;f__Burkholderiaceae;g__Paraburkholderia;s__
+d__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Raoultella;s__Raoultella sp003752615
+d__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Klebsiella;s__Klebsiella pneumoniae
+
+WTH?
+
+Try CheckM
+
+```
+source /home/GLBRCORG/trina.mcmahon/miniconda3/etc/profile.d/conda.sh
+conda activate bioinformatics
+PYTHONPATH=''
+
+checkm lineage_wf \
+        -t 25 \
+        -x fa \
+        /home/GLBRCORG/trina.mcmahon/md2021/analysis/CedarSwamp/binning/CedarSwamp_bins \
+        checkM &
+
+checkm qa \
+        checkM/lineage.ms \
+        checkM \
+        -o 2 \
+        -f checkM/checkm.out \
+        --tab_table
+
+awk -F '\t' -v OFS='\t' '{ print $1,$6,$7,$9,$11,$13,$15,$17,$19,$23 }' checkM/checkm.out > checkm_stats.tsv
+```
+
+
+
+Now coverM
+
+First change names
+
+```
+cd ~/md2021/analysis/CedarSwamp/binning/CedarSwamp_bins
+mkdir fastas_renamed
+
+for FILE in *.fa;
+do
+ awk '/^>/ {gsub(/.fa/,"",FILENAME);printf(">%s\n",FILENAME);next;} {print}' $FILE > fastas_renamed/${FILE}
+done &
+
+mkdir contig_num
+
+for FILE in *.fa;
+  do
+      awk '/^>/{$0=$0"_Contig_"(++i)}1' < $FILE > contig_num/${FILE}
+  done
+```
+
+See coverm_mapping.sh
+They have quite high coverage
+Dunno what is up

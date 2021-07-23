@@ -45,6 +45,8 @@ coverm genome \
     --min-covered-fraction 0 \
     -t 28 > baby_lem_bins_relabun_output.txt &
 
+
+
     coverm genome \
         --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/coverM/baby_lem_bins_concat.fna \
         -s "~" \
@@ -82,6 +84,9 @@ coverm contig \
     -t 28 > baby_lem_assembly_mean_covg_output.txt &
 
 
+# be careful or the second run will write over the first one, stored in bam_cache
+
+
 
 coverm genome \
     -f /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/baby_lem_2018_scaffolds.fasta \
@@ -104,6 +109,75 @@ coverm contig \
     --min-read-percent-identity 0.95 \
     --min-covered-fraction 0 \
     -t 28 > baby_lem_unbinned_mean_covg_output.txt &
+
+
+
+
+### Bins from Cedar Swamp
+
+  coverm genome \
+      --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/CedarSwamp/mapping/CedarSwamp_bins_renamed_concat.fa \
+      -s "~" \
+      -m mean \
+      --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/CedarSwamp/CedarSwamp_2019_EAA_30cm.fastq.qcd.gz \
+      --bam-file-cache-directory bam_cache \
+      --min-read-aligned-percent 0.75 \
+      --min-read-percent-identity 0.95 \
+      --min-covered-fraction 0 \
+      -t 28 > CedarSwamp_bins_mean_covg_output.txt &
+
+
+
+
+
+
+### Bins from near_lem
+
+coverm genome \
+    --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/near_lem_2018_bins/near_lem_bins_renamed_concat.fasta \
+    -s "~" \
+    -m relative_abundance \
+    --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/near_lem_2018.qcd.fastq.gz \
+    --bam-file-cache-directory bam_cache \
+    --min-read-aligned-percent 0.75 \
+    --min-read-percent-identity 0.95 \
+    --min-covered-fraction 0 \
+    -t 28 > near_lem_bins_relabun_output.txt &
+
+# be careful or the second run will write over the first one, stored in bam_cache
+
+    coverm genome \
+        --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/near_lem_2018_bins/near_lem_bins_renamed_concat.fasta \
+        -s "~" \
+        -m mean \
+        --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/near_lem_2018.qcd.fastq.gz \
+        --bam-file-cache-directory bam_cache2 \
+        --min-read-aligned-percent 0.75 \
+        --min-read-percent-identity 0.95 \
+        --min-covered-fraction 0 \
+        -t 28 > near_lem_bins_mean_covg_output.txt &
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
