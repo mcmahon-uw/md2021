@@ -7,8 +7,6 @@ Initiated by:  Trina McMahon (course faculty) - trina.mcmahon@wisc.edu
 
 Trunk River metagenomes sampled in 2018
 
-baby_lem dataset
-
 ################
 ## BINNING
 ################

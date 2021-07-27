@@ -2,4 +2,5 @@ data/
 analysis/.DS_Store
 analysis/CedarSwamp/.DS_store
 analysis/
+results/
 .DS_store

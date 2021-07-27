@@ -146,37 +146,76 @@ coverm genome \
 
 # be careful or the second run will write over the first one, stored in bam_cache
 
+
+
+        coverm genome \
+            --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/near_lem_2018_bins/near_lem_bins_renamed_concat.fasta \
+            -s "~" \
+            -m mean \
+            --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/near_lem_2018.qcd.fastq.gz \
+            --bam-file-cache-directory bam_cache2 \
+            --min-read-aligned-percent 0.75 \
+            --min-read-percent-identity 0.95 \
+            --min-covered-fraction 0 \
+            -t 28 > near_lem_bins_mean_covg_output.txt &
+
+
+
+
+
+
+### Bins from Sippewissett
+
+
+
+
+
     coverm genome \
-        --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/mapping/near_lem_2018_bins/near_lem_bins_renamed_concat.fasta \
+        --reference ~/md2021/analysis/Sipp/mapping/metaberry_1_2018_bins/fastas_renamed/contig_num/metaberry_1_bins_concat.fasta \
         -s "~" \
         -m mean \
-        --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/TrunkRiver/near_lem_2018.qcd.fastq.gz \
-        --bam-file-cache-directory bam_cache2 \
+        --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/Sipp/metaberry_1_2018.qcd.fastq.gz \
+        --bam-file-cache-directory bam_cache \
         --min-read-aligned-percent 0.75 \
         --min-read-percent-identity 0.95 \
         --min-covered-fraction 0 \
-        -t 28 > near_lem_bins_mean_covg_output.txt &
+        -t 28 > metaberry_1_bins_mean_covg_output.txt &
 
 
+coverm genome \
+    --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/Sipp/mapping/metaberry_1_2018_bins/fastas_renamed/contig_num/metaberry_1_bins_concat.fasta \
+    -s "~" \
+    -m relative_abundance \
+    --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/Sipp/metaberry_1_2018.qcd.fastq.gz \
+    --bam-file-cache-directory bam_cache \
+    --min-read-aligned-percent 0.75 \
+    --min-read-percent-identity 0.95 \
+    --min-covered-fraction 0 \
+    -t 28 > metaberry_1_bins_relabun_output.txt &
 
 
+    coverm genome \
+        --reference ~/md2021/analysis/Sipp/mapping/metaberry_2_2018_bins/fastas_renamed/contig_num/metaberry_2_bins_concat.fasta \
+        -s "~" \
+        -m mean \
+        --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/Sipp/metaberry_2_2018.qcd.fastq.gz \
+        --bam-file-cache-directory bam_cache \
+        --min-read-aligned-percent 0.75 \
+        --min-read-percent-identity 0.95 \
+        --min-covered-fraction 0 \
+        -t 28 > metaberry_2_bins_mean_covg_output.txt &
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+coverm genome \
+    --reference /home/GLBRCORG/trina.mcmahon/md2021/analysis/Sipp/mapping/metaberry_2_2018_bins/fastas_renamed/contig_num/metaberry_2_bins_concat.fasta \
+    -s "~" \
+    -m relative_abundance \
+    --interleaved /home/GLBRCORG/trina.mcmahon/md2021/data/metagenomes/Sipp/metaberry_2_2018.qcd.fastq.gz \
+    --bam-file-cache-directory bam_cache_2 \
+    --min-read-aligned-percent 0.75 \
+    --min-read-percent-identity 0.95 \
+    --min-covered-fraction 0 \
+    -t 28 > metaberry_2_bins_relabun_output.txt &
 
 
 

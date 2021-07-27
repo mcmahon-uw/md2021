@@ -123,7 +123,7 @@ See coverm_mapping.sh code
 
 Waiting for the other assemblies to be done....
 
-near_lem
+# near_lem
 
 ```
 BBPATH=/opt/bifxapps/bbmap-38.32
@@ -139,7 +139,7 @@ samtools sort near_lem_2018_mapping.bam -o near_lem_2018_mapping.sorted.bam
 
 ```
 
-baby_lem
+# baby_lem
 
 ```
 BBPATH=/opt/bifxapps/bbmap-38.32
@@ -196,7 +196,7 @@ gtdbtk classify_wf \
 ```
 /opt/bifxapps/metabat-2.12.1/jgi_summarize_bam_contig_depths --outputDepth near_lem_2018_depth.txt near_lem_2018_mapping.sorted.bam
 
-/opt/bifxapps/metabat-2.12.1/metabat2 -i /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/assembly/near_lem_2018_scaffolds.fasta -a near_lem_2018_depth.txt -o near_lem_2018_bins/bin
+/opt/bifxapps/metabat-2.12.1/metabat2 -i /home/GLBRCORG/trina.mcmahon/md2021/analysis/TrunkRiver/assembly/near_lem_2018_scaffolds.fasta -a near_lem_2018_depth.txt -o near_lem_2018_bins/bin --unbinned &
 
 
 for file in bin*
@@ -650,3 +650,33 @@ Look more closely at the baby_lem_2018_bin.1_Contig_33
 # CRISPR spacers from previous genomes
 
 Emil also gave me the spacer sqeuences
+
+```
+mkdir contig_num
+
+for FILE in *.fna;
+  do
+      awk '/^>/{$0=$0"~Spacer_"(++i)}1' < $FILE > contig_num/${FILE}
+  done
+
+```
+Concatenated these to all_Emil_spacers.fasta
+
+```
+
+
+blastn -query all_Emil_spacers.fasta -db baby_lem_bins_renamed_concat.fasta.db -task blastn -evalue 1e-1 -out Emil-spacers-vs-baby_lem_bins.blastn.txt -outfmt "6 qseqid sseqid pident length qlen mismatch gapopen qstart qend sstart send evalue" &
+
+
+makeblastdb -dbtype nucl -in near_lem_2018_bins_concat.fasta -out near_lem_2018_bins_concat.db &
+
+blastn -query all_Emil_spacers.fasta -db near_lem_2018_bins_concat.db -task blastn -evalue 1e-1 -out Emil-spacers-vs-near_lem_bins.blastn.txt -outfmt "6 qseqid sseqid pident length qlen mismatch gapopen qstart qend sstart send evalue" &
+
+blastn -query all_Emil_spacers.fasta -db baby_lem_2018_scaffolds_renamed.db -task blastn -evalue 1e-1 -out Emil-spacers-vs-baby_lem_assembly.blastn.txt -outfmt "6 qseqid sseqid pident length qlen mismatch gapopen qstart qend sstart send evalue" &
+
+makeblastdb -dbtype nucl -in near_lem_2018_scaffolds.fasta -out near_lem_2018_scaffolds.db &
+
+blastn -query all_Emil_spacers.fasta -db near_lem_2018_scaffolds.db -task blastn -evalue 1e-1 -out Emil-spacers-vs-near_lem_assembly.blastn.txt -outfmt "6 qseqid sseqid pident length qlen mismatch gapopen qstart qend sstart send evalue" &
+
+
+```
